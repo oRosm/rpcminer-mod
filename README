@@ -1,5 +1,4 @@
-This is another modified version, that can be built and run on Windows using Visual Studio 2010.
-Only builds as 32-bit but will still run on x64.
+This is another modified version, that can be run on Windows and built using Visual Studio 2010. Only builds as 32-bit but will still run on x64.
 
 To run: 
 
@@ -11,7 +10,7 @@ Requires Visual Studio 2010 and 1) NVIDIA GPU Computing Toolkit for CUDA, or 2) 
 
 Expand all the 7z files in the external directory.
 
-Open solution and make sure CUDA or OpenCL includes and library paths are correct.
+Open solution and make sure CUDA or OpenCL includes and library paths for each project are correct.
 
 Build.
 
