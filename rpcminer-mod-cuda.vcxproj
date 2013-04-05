@@ -36,6 +36,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\</OutDir>
     <IntDir>$(SolutionDir)\obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <CustomBuildAfterTargets>Build</CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -58,6 +59,16 @@
       <AdditionalLibraryDirectories>C:\Program Files %28x86%29\NVIDIA GPU Computing Toolkit\CUDA\v5.0\lib\Win32;$(MSBuildProjectDirectory)\external\libcurl-7.18.0-win32-msvc;$(MSBuildProjectDirectory)\external\boost_1_53_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libcurl.lib;cuda.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <CustomBuildStep>
+      <Command>"$(CUDA_PATH)bin\nvcc.exe" -ptx --use-local-env --cl-version 2010 -m32 -I"$(CUDA_PATH)include" -I"$(ProjectDir)src\cuda" -o "$(ProjectDir)src\cuda\bitcoinminercuda.ptx" "$(ProjectDir)src\cuda\bitcoinminercuda.cu"
+
+</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Message>Compiling bitcoinminercuda.cu</Message>
+      <Outputs>$(ProjectDir)\src\cuda\bitcoinminercuda.ptx</Outputs>
+      <Inputs>$(ProjectDir)\src\cuda\bitcoinminercuda.cu;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -131,6 +142,9 @@
     <ClInclude Include="src\strlcpy.h" />
     <ClInclude Include="src\uint256.h" />
     <ClInclude Include="src\util.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\cuda\bitcoinminercuda.cu" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
