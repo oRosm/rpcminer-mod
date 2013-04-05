@@ -42,6 +42,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\</OutDir>
     <IntDir>$(SolutionDir)\obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <CustomBuildAfterTargets>Build</CustomBuildAfterTargets>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -85,6 +86,12 @@
       <AdditionalLibraryDirectories>C:\Program Files %28x86%29\NVIDIA GPU Computing Toolkit\CUDA\v5.0\lib\Win32;$(MSBuildProjectDirectory)\external\libcurl-7.18.0-win32-msvc;$(MSBuildProjectDirectory)\external\boost_1_53_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libcurl.lib;cuda.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <CustomBuildStep>
+      <Command>"$(ProjectDir)buildcuda.bat"</Command>
+      <Message>Compiling bitcoinminercuda.cu</Message>
+      <Outputs>$(ProjectDir)\bin\bitcoinminercuda.ptx</Outputs>
+      <Inputs>$(ProjectDir)\src\cuda\bitcoinminercuda.cu;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\cryptopp\cpu.cpp" />
