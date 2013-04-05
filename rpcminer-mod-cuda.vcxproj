@@ -60,11 +60,11 @@
       <AdditionalDependencies>libcurl.lib;cuda.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
-      <Command>"$(ProjectDir)buildcuda.bat" "$(VCInstallDir)"</Command>
+      <Command>"$(ProjectDir)buildcuda.bat"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Message>Compiling bitcoinminercuda.cu</Message>
-      <Outputs>$(ProjectDir)\src\cuda\bitcoinminercuda.ptx</Outputs>
+      <Outputs>$(ProjectDir)\bin\bitcoinminercuda.ptx</Outputs>
       <Inputs>$(ProjectDir)\src\cuda\bitcoinminercuda.cu;%(Inputs)</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
