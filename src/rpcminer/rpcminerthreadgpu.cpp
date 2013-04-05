@@ -16,6 +16,8 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 **/
 
+#pragma once
+
 #if defined(_BITCOIN_MINER_CUDA_) || defined(_BITCOIN_MINER_OPENCL_)
 
 #include "rpcminerthreadgpu.h"
