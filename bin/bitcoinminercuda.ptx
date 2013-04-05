@@ -8,8 +8,8 @@
 .target sm_20
 .address_size 32
 
-	.file	1 "C:/Users/cdm/AppData/Local/Temp/tmpxft_00000544_00000000-8_bitcoinminercuda.cpp3.i"
-	.file	2 "C:\\My Projects\\bitcoin\\3rdParty\\rpcminer-mod\\src/cuda/bitcoinminercuda.cu"
+	.file	1 "C:/Users/cdm/AppData/Local/Temp/tmpxft_00001e18_00000000-8_bitcoinminercuda.cpp3.i"
+	.file	2 "C:\\My Projects\\bitcoin\\3rdParty\\rpcminer-mod\\bin/bitcoinminercuda.cu"
 
 .visible .entry cuda_process(
 	.param .u32 cuda_process_param_0,

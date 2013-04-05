@@ -14,6 +14,17 @@ Open solution and make sure CUDA or OpenCL includes and library paths for each p
 
 Build.
 
+For the Kepler patch described in https://bitcointalk.org/index.php?topic=163750
+
+Checkout/switch to the "kepler" branch.
+
+Rebuild (or use the pre-built binaries).
+
+To rebuild just the CUDA ptx file, open a Visual Studio 2010 Command Prompt, or any command prompt and run the appropriate vcvars32.bat.
+
+Go to the main directory and run buildcuda.bat.
+
+
 *********************
 
 This is a modification of puddinpop's miner.
