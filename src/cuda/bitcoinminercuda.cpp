@@ -290,6 +290,8 @@ const unsigned long CUDARunner::RunStep()
 	{
 		AllocateResources(m_numb,m_numt);
 	}
+	m_out[0].m_bestnonce=0;
+	cuMemcpyHtoD(m_devout,m_out,/*m_numb*m_numt*/sizeof(cuda_out));
 
 	cuMemcpyHtoD(m_devin,m_in,sizeof(cuda_in));
 
@@ -319,11 +321,11 @@ const unsigned long CUDARunner::RunStep()
 	cuFuncSetBlockShape(m_function,m_numt,1,1);
 	cuLaunchGrid(m_function,m_numb,1);
 
-	cuMemcpyDtoH(m_out,m_devout,m_numb*m_numt*sizeof(cuda_out));
+	cuMemcpyDtoH(m_out,m_devout,/*m_numb*m_numt*/sizeof(cuda_out));
 
 	// very unlikely that we will find more than 1 hash with H=0
 	// so we'll just return the first one and not even worry about G
-	for(int i=0; i<m_numb*m_numt; i++)
+	for(int i=0; i<1/*m_numb*m_numt*/; i++)
 	{
 		if(m_out[i].m_bestnonce!=0)// && m_out[i].m_bestg<bestg)
 		{

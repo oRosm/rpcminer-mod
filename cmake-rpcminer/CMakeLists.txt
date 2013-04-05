@@ -32,6 +32,10 @@ SET(BITCOIN_RPC_MINER_OPENCL_SRC
 
 IF(BITCOIN_ENABLE_CUDA)
 	ADD_DEFINITIONS(-D_BITCOIN_MINER_CUDA_)
+	#SET(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} -gencode=arch=compute_20,code=sm_20 -gencode=arch=compute_35,code=sm_35)
+	SET(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} -gencode=arch=compute_35,code=sm_35  -Xptxas=-v -Xopencc=-LIST:source=on)
+	#SET(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} -gencode=arch=compute_13,code=sm_13 -Xptxas=-v -Xopencc=-LIST:source=on)
+
 	CUDA_ADD_EXECUTABLE(rpcminer ${BITCOIN_RPC_MINER_SRC} ${BITCOIN_RPC_MINER_CUDA_SRC})
 	# Install generated PTX CUDA module
 	INSTALL(FILES "${CMAKE_CURRENT_BINARY_DIR}/${generated_file_basename}.ptx" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/rpcminer-cuda" RENAME "bitcoinminercuda.ptx")

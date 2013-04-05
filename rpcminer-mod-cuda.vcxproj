@@ -60,9 +60,7 @@
       <AdditionalDependencies>libcurl.lib;cuda.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
-      <Command>"$(CUDA_PATH)bin\nvcc.exe" -ptx --use-local-env --cl-version 2010 -m32 -I"$(CUDA_PATH)include" -I"$(ProjectDir)src\cuda" -o "$(ProjectDir)src\cuda\bitcoinminercuda.ptx" "$(ProjectDir)src\cuda\bitcoinminercuda.cu"
-
-</Command>
+      <Command>"$(ProjectDir)buildcuda.bat" "$(VCInstallDir)"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Message>Compiling bitcoinminercuda.cu</Message>
