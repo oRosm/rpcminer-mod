@@ -1,4 +1,5 @@
-This is another modified version, that can be built and run Windows using Visual Studio 2010.
+This is another modified version, that can be built and run on Windows using Visual Studio 2010.
+Only builds as 32-bit but will still run on x64.
 
 To run: 
 
