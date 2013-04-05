@@ -1,3 +1,21 @@
+This is another modified version, that can be built and run Windows using Visual Studio 2010.
+
+To run: 
+
+Download files from bin directory, and execute rcpminer-mod-cuda.exe or rcpminer-mod-opencl.exe as appropriate.
+
+To build:
+
+Requires Visual Studio 2010 and 1) NVIDIA GPU Computing Toolkit for CUDA, or 2) AMD APP for OpenCL.
+
+Expand all the 7z files in the external directory.
+
+Open solution and make sure CUDA or OpenCL includes and library paths are correct.
+
+Build.
+
+*********************
+
 This is a modification of puddinpop's miner.
 This modification will allow users to compile this miner with CUDA or Opencl support and install it in easly manner.
 
