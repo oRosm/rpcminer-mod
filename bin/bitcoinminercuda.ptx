@@ -8,9 +8,9 @@
 .target sm_35
 .address_size 32
 
-	.file	1 "C:/Users/cdm/AppData/Local/Temp/tmpxft_00000a6c_00000000-8_bitcoinminercuda.cpp3.i"
+	.file	1 "C:/Users/cdm/AppData/Local/Temp/tmpxft_00001f5c_00000000-8_bitcoinminercuda.cpp3.i"
 	.file	2 "c:\\program files (x86)\\nvidia gpu computing toolkit\\cuda\\v5.0\\include\\cuda_device_runtime_api.h"
-	.file	3 "C:\\My Projects\\bitcoin\\3rdParty\\rpcminer-mod\\src/cuda/bitcoinminercuda.cu"
+	.file	3 "C:\\My Projects\\bitcoin\\3rdParty\\rpcminer-mod\\bin/bitcoinminercuda.cu"
 	.file	4 "C:/Program Files (x86)/NVIDIA GPU Computing Toolkit/CUDA/v5.0/nvvm/ci_include.h"
 	.file	5 "c:\\program files (x86)\\nvidia gpu computing toolkit\\cuda\\v5.0\\include\\sm_11_atomic_functions.h"
 // __cuda_local_var_168411_39_non_const_canExit has been demoted
