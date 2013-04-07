@@ -38,7 +38,7 @@
 #include <sys/resource.h>		// for setpriority
 #endif
 
-#include <boost/thread/thread.hpp>
+#include <boost/thread.hpp>
 #include <boost/date_time/posix_time/posix_time_types.hpp>
 #include <boost/date_time/gregorian/gregorian_types.hpp>
 #include <boost/interprocess/sync/file_lock.hpp>

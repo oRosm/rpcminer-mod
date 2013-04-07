@@ -65,13 +65,7 @@ __kernel __attribute__((vec_type_hint(uint))) WORKGROUP void opencl_process(__gl
 	uint bestnonce=0;
 	//uint bestg=~0;
 	
-	//uint* in_m_AH = in->m_AH;
-	uint in_m_AH[8];
-	int i;
-	for (i=7; i>=0; i--)
-	{
-		in_m_AH[i] = in->m_AH[i];
-	}
+	uint* in_m_AH = in->m_AH;
   uint in_m_merkle = in->m_merkle;
   uint in_m_ntime = in->m_ntime;
   uint in_m_nbits = in->m_nbits;
