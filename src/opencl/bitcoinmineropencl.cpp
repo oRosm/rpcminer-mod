@@ -16,6 +16,8 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 **/
 
+#pragma once;
+
 #ifdef _BITCOIN_MINER_OPENCL_
 
 #define NOMINMAX
@@ -52,7 +54,11 @@ OpenCLRunner::OpenCLRunner():GPURunner<cl_uint,cl_uint>(TYPE_OPENCL),m_platform(
 			m_platform=0;
 		}
 	}
-	
+
+#ifdef _WIN32
+	buildoptions+="-D _WIN32 ";
+#endif
+
 	if(numplatforms>0 && m_platform>=0 && m_platform<numplatforms)
 	{
 		cl_platform_id *pids;
@@ -98,7 +104,7 @@ OpenCLRunner::OpenCLRunner():GPURunner<cl_uint,cl_uint>(TYPE_OPENCL),m_platform(
 				{
 					printf("Defining AMDMEDIAOPS\n");
 					hasmediaops=true;
-					buildoptions+="-D AMDMEDIAOPS";
+					buildoptions+="-D AMDMEDIAOPS ";
 				}
 				
 				delete [] ext;
@@ -108,11 +114,7 @@ OpenCLRunner::OpenCLRunner():GPURunner<cl_uint,cl_uint>(TYPE_OPENCL),m_platform(
 			{
 				std::ostringstream threadstr;
 				threadstr << m_requestedthreads;
-				if(buildoptions.size()>0)
-				{
-					buildoptions+=" ";
-				}
-				buildoptions+="-D WORKGROUPSIZE="+threadstr.str();
+				buildoptions+="-D WORKGROUPSIZE="+threadstr.str()+" ";
 			}
 
 			m_context=clCreateContext(0,1,&m_device,NULL,NULL,&rval);
@@ -316,7 +318,7 @@ void OpenCLRunner::FindBestConfiguration()
 
 }
 
-const cl_uint OpenCLRunner::RunStep()
+const cl_uint OpenCLRunner::RunStep(uint32 nonce)
 {
 	//cl_uint best=0;
 	//cl_uint bestg=~0;

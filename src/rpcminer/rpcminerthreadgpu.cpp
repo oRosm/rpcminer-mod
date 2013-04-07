@@ -16,6 +16,8 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  **/
 
+#pragma once
+
 #if defined(_BITCOIN_MINER_CUDA_) || defined(_BITCOIN_MINER_OPENCL_)
 
 #include "rpcminerthreadgpu.h"
@@ -69,10 +71,75 @@ void RPCMinerThreadGPU::Run(void *arg)
 
     gpu.FindBestConfiguration();
 
+#ifdef _BITCOIN_MINER_OPENCL_
+		int iterations=10000/(gpu.GetStepIterations()+gpu.GetNumBlocks()+gpu.GetNumThreads());
+
+		while(td->m_generate)
+		{
+			if(td->m_havework)
+			{
+
+				CRITICAL_BLOCK(td->m_cs);
+				if(currentblockid!=td->m_nextblock.m_blockid)
+				{
+					currenttarget=td->m_nextblock.m_target;
+					currentblockid=td->m_nextblock.m_blockid;
+					::memcpy((void *)midbuffptr,&td->m_nextblock.m_midstate[0],32);
+					::memcpy((void *)blockbuffptr,&td->m_nextblock.m_block[0],64);
+					::memcpy(&temphash,&td->m_nextblock.m_hash1[0],64);
+					(*nonce)=0;
+					for(int i=0; i<8; i++)
+					{
+						gpu.GetIn()->m_AH[i]=((unsigned int *)midbuffptr)[i];
+					}
+					gpu.GetIn()->m_merkle=((unsigned int *)blockbuffptr)[0];
+					gpu.GetIn()->m_ntime=((unsigned int *)blockbuffptr)[1];
+					gpu.GetIn()->m_nbits=((unsigned int *)blockbuffptr)[2];
+				}
+
+				for(int i=0; i<iterations; i++)
+				{
+					gpu.GetIn()->m_nonce=(*nonce);
+
+					gpunonce=gpu.RunStep(*nonce);
+					if(gpunonce!=0)
+					{
+						(*nonce)=CryptoPP::ByteReverse(gpunonce);
+						SHA256Transform(&temphash,(void *)blockbuffptr,(void *)midbuffptr);
+						SHA256Transform(&hash,&temphash,SHA256InitState);
+
+						if(hash<currenttarget)
+						{
+							CRITICAL_BLOCK(td->m_cs);
+
+							td->m_foundhashes.push_back(foundhash(currentblockid,(*nonce)));
+						}
+
+					}
+
+					(*nonce)+=(gpu.GetStepIterations()*gpu.GetNumBlocks()*gpu.GetNumThreads());
+
+					{
+						CRITICAL_BLOCK(td->m_cs);
+						td->m_hashcount+=(gpu.GetStepIterations()*gpu.GetNumBlocks()*gpu.GetNumThreads());
+					}
+
+				}
+
+			}
+			else
+			{
+				Sleep(100);
+			}
+
+		}
+#endif
+
+#ifdef _BITCOIN_MINER_CUDA_
     int64 threads = gpu.GetStepIterations() * gpu.GetNumBlocks();
     threads *= gpu.GetNumThreads();
 
-    std::cout << "iterations on gpu=" << gpu.GetStepIterations() << " blocks=" << gpu.GetNumBlocks() << " threads=" << gpu.GetNumThreads() << std::endl;
+		std::cout << "iterations on gpu=" << gpu.GetStepIterations() << " blocks=" << gpu.GetNumBlocks() << " threads=" << gpu.GetNumThreads() << std::endl;
     int64 iterations = int64(cudaIn::maxNonce) / (threads); //10000/(gpu.GetStepIterations()+gpu.GetNumBlocks()+gpu.GetNumThreads());
     printf("Iterations: %llu,hashs per iteration %llu\n", iterations, (gpu.GetStepIterations() * gpu.GetNumBlocks() * gpu.GetNumThreads()));
     unsigned int lastHash = 0u;
@@ -145,6 +212,7 @@ void RPCMinerThreadGPU::Run(void *arg)
         }
 
     }
+#endif
 
     {
         CRITICAL_BLOCK(td->m_cs);

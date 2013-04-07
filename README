@@ -1,32 +1,3 @@
-This is another modified version, that can be run on Windows and built using Visual Studio 2010. Only builds as 32-bit but will still run on x64.
-
-To run: 
-
-Download files from bin directory, and execute rcpminer-mod-cuda.exe or rcpminer-mod-opencl.exe as appropriate.
-
-To build:
-
-Requires Visual Studio 2010 and 1) NVIDIA GPU Computing Toolkit for CUDA, or 2) AMD APP for OpenCL.
-
-Expand all the 7z files in the external directory.
-
-Open solution and make sure CUDA or OpenCL includes and library paths for each project are correct.
-
-Build.
-
-For the Kepler patch described in https://bitcointalk.org/index.php?topic=163750
-
-Checkout/switch to the "kepler" branch.
-
-Rebuild (or use the pre-built binaries).
-
-To rebuild just the CUDA ptx file, open a Visual Studio 2010 Command Prompt, or any command prompt and run the appropriate vcvars32.bat.
-
-Go to the main directory and run buildcuda.bat.
-
-
-*********************
-
 This is a modification of puddinpop's miner.
 This modification will allow users to compile this miner with CUDA or Opencl support and install it in easly manner.
 

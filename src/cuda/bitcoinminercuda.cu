@@ -111,7 +111,11 @@ __launch_bounds__(256, 8)
 #elif __CUDA_ARCH__ == 350
 __launch_bounds__(256, 8)
 #endif
+#ifdef _WIN32
+void cuda_process(uint32 * __restrict in, uint32 * __restrict out, const uint32 nonceIn, const uint32 loops, const uint32 bits)
+#else
 void cuda_process(uint32 __restrict__ *in, uint32 __restrict__ *out, const uint32 nonceIn, const uint32 loops, const uint32 bits)
+#endif
 {
 #if __CUDA_ARCH__ == 130
     if (*out != 0) return;

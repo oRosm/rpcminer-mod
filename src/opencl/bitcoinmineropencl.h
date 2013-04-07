@@ -25,6 +25,8 @@
 #include "openclshared.h"
 #include <string>
 
+typedef unsigned int uint32;
+
 class OpenCLRunner:public GPURunner<cl_uint,cl_uint>
 {
 public:
@@ -33,7 +35,7 @@ public:
 
 	void FindBestConfiguration();
 
-	const cl_uint RunStep();
+	const cl_uint RunStep(uint32 nonce);
 
 	opencl_in *GetIn()		{ return m_in; }
 

@@ -171,9 +171,4 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="src\cuda\bitcoinminercuda.cu">
-      <Filter>Resource Files</Filter>
-    </None>
-  </ItemGroup>
 </Project>

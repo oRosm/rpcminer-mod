@@ -38,7 +38,11 @@
 #include <sys/resource.h>		// for setpriority
 #endif
 
+#ifdef _WIN32
+#include <boost/thread/thread.hpp>
+#else
 #include <boost/thread.hpp>
+#endif
 #include <boost/date_time/posix_time/posix_time_types.hpp>
 #include <boost/date_time/gregorian/gregorian_types.hpp>
 #include <boost/interprocess/sync/file_lock.hpp>

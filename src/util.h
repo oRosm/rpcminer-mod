@@ -71,7 +71,7 @@ T* alignup(T* p)
     return u.ptr;
 }
 
-#ifdef __WXMSW__
+#if defined(__WXMSW__) || defined(_MSC_VER)
 #define MSG_NOSIGNAL        0
 #define MSG_DONTWAIT        0
 #ifndef UINT64_MAX
@@ -111,7 +111,7 @@ inline int myclosesocket(SOCKET& hSocket)
 {
     if (hSocket == INVALID_SOCKET)
         return WSAENOTSOCK;
-#ifdef __WXMSW__
+#if defined(__WXMSW__) || defined(_MSC_VER)
     int ret = closesocket(hSocket);
 #else
     int ret = close(hSocket);
@@ -174,7 +174,7 @@ int GetFilesize(FILE* file);
 void GetDataDir(char* pszDirRet);
 std::string GetConfigFile();
 void ReadConfigFile(std::map<std::string, std::string>& mapSettingsRet, std::map<std::string, std::vector<std::string> >& mapMultiSettingsRet);
-#ifdef __WXMSW__
+#if defined(__WXMSW__) || defined(_MSC_VER)
 std::string MyGetSpecialFolderPath(int nFolder, bool fCreate);
 #endif
 std::string GetDefaultDataDir();
@@ -201,7 +201,7 @@ void AddTimeData(unsigned int ip, int64 nTime);
 // Wrapper to automatically initialize critical sections
 class CCriticalSection
 {
-#ifdef __WXMSW__
+#if defined(__WXMSW__) || defined(_MSC_VER)
 protected:
     CRITICAL_SECTION cs;
 public:
@@ -366,7 +366,7 @@ inline void PrintHex(const std::vector<unsigned char>& vch, const char* pszForma
 inline int64 GetPerformanceCounter()
 {
     int64 nCounter = 0;
-#ifdef __WXMSW__
+#if defined(__WXMSW__) || defined(_MSC_VER)
     QueryPerformanceCounter((LARGE_INTEGER*)&nCounter);
 #else
     timeval t;
@@ -400,7 +400,7 @@ void skipspaces(T& it)
 
 inline bool IsSwitchChar(char c)
 {
-#ifdef __WXMSW__
+#if defined(__WXMSW__) || defined(_MSC_VER)
     return c == '-' || c == '/';
 #else
     return c == '-';
@@ -451,7 +451,7 @@ inline std::string FormatVersion(int nVersion)
 
 inline void heapchk()
 {
-#ifdef __WXMSW__
+#if defined(__WXMSW__) || defined(_MSC_VER)
     /// for debugging
     //if (_heapchk() != _HEAPOK)
     //    DebugBreak();
@@ -565,7 +565,8 @@ inline uint160 Hash160(const std::vector<unsigned char>& vch)
 
 // Note: It turns out we might have been able to use boost::thread
 // by using TerminateThread(boost::thread.native_handle(), 0);
-#ifdef __WXMSW__
+
+#if defined(__WXMSW__) || defined(_MSC_VER)
 typedef HANDLE pthread_t;
 
 inline pthread_t CreateThread(void(*pfn)(void*), void* parg, bool fWantHandle=false)
@@ -644,7 +645,7 @@ inline void ExitThread(unsigned int nExitCode)
 
 inline bool AffinityBugWorkaround(void(*pfn)(void*))
 {
-#ifdef __WXMSW__
+#if defined(__WXMSW__) || defined(_MSC_VER)
     // Sometimes after a few hours affinity gets stuck on one processor
     DWORD dwProcessAffinityMask = -1;
     DWORD dwSystemAffinityMask = -1;
