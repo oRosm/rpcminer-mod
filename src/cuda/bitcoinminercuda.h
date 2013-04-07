@@ -30,7 +30,7 @@
  *
  * @param cmd command with cudaError_t return value to check
  */
-#define CUDA_CHECK(cmd) {cudaError_t error = cmd; if(error!=cudaSuccess){std::cerr<<"<"<<__FILE__<<">:"<<__LINE__<<std::endl; throw std::runtime_error(std::string("[CUDA] Error: ") + std::string(cudaGetErrorString(error)));}}
+#define CUDA_CHECK(cmd) { cudaError_t error = cmd; if (error!=cudaSuccess) { std::string errs = std::string("[CUDA] Error: ") + std::string(cudaGetErrorString(error)); std::cerr<<"<"<<__FILE__<<">:"<<__LINE__<<errs<<std::endl; throw std::runtime_error(errs.c_str());} }
 
 #define __delete(function,var) if((var)) { CUDA_CHECK(function(var)); var=NULL; }
 

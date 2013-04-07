@@ -20,8 +20,53 @@
 #include <ctime>
 #include <cstdlib>
 
+#if defined(_WIN32) && defined(_DEBUG)
+#include <DbgHelp.h>
+#endif
+
 std::map<std::string,std::string> mapArgs;
 std::map<std::string,std::vector<std::string> > mapMultiArgs;
+
+#if defined(_WIN32) && defined(_DEBUG)
+void CreateMiniDump(EXCEPTION_POINTERS* pep) 
+{
+	// Open the file 
+	typedef BOOL (*PDUMPFN)( 
+		HANDLE hProcess, 
+		DWORD ProcessId, 
+		HANDLE hFile, 
+		MINIDUMP_TYPE DumpType, 
+		PMINIDUMP_EXCEPTION_INFORMATION ExceptionParam, 
+		PMINIDUMP_USER_STREAM_INFORMATION UserStreamParam, 
+		PMINIDUMP_CALLBACK_INFORMATION CallbackParam
+	);
+
+  HANDLE hFile = CreateFile("rpcminer.dmp", GENERIC_READ | GENERIC_WRITE,  0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL); 
+  HMODULE h = ::LoadLibrary("DbgHelp.dll");
+  PDUMPFN pFn = (PDUMPFN)GetProcAddress(h, "MiniDumpWriteDump");
+
+  if (hFile != NULL && hFile != INVALID_HANDLE_VALUE) 
+  {
+    MINIDUMP_EXCEPTION_INFORMATION mdei; 
+
+    mdei.ThreadId           = GetCurrentThreadId(); 
+    mdei.ExceptionPointers  = pep; 
+    mdei.ClientPointers     = TRUE; 
+
+    MINIDUMP_TYPE mdt       = MiniDumpNormal; 
+
+    BOOL rv = (*pFn)( GetCurrentProcess(), GetCurrentProcessId(), hFile, mdt, (pep != 0) ? &mdei : 0, 0, 0 ); 
+
+    CloseHandle( hFile ); 
+  }
+}
+
+LONG WINAPI RpcMinerUnhandledExceptionFilter(struct _EXCEPTION_POINTERS *ExceptionInfo)
+{
+	CreateMiniDump(ExceptionInfo);
+	return EXCEPTION_EXECUTE_HANDLER;
+}
+#endif
 
 void ParseParameters(int argc, char* argv[])
 {
@@ -123,6 +168,10 @@ int main(int argc, char *argv[])
 	std::string statsurl("");
 	int workrefreshms=2000;
 	int threadcount=1;
+
+#if defined(_WIN32) && defined(_DEBUG)
+	SetUnhandledExceptionFilter(RpcMinerUnhandledExceptionFilter);
+#endif
 
 	ParseParameters(argc,argv);
 
