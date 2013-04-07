@@ -1,37 +1,59 @@
-This is the Windows build of psychocoder's version of rpcminer-mod (https://github.com/psychocoder-germany/rpcminer-mod) - separate until it gets merged. It should still be compatible with unix, just has added Windows compatability.
+This is the Windows build of psychocoder's version of rpcminer-mod (https://github.com/psychocoder-germany/rpcminer-mod) - until it gets merged. It should still be compatible with unix, just has added Windows compatability.
 
+See "NVIDIA Kepler (K20) from 134MHash/s to 330MHash/s with CUDA" (https://bitcointalk.org/index.php?topic=163750)
 
-NVIDIA:
+UNIX
 
-Download and install the latest NVIDIA GPU Computing Toolkit for CUDA (5.x) including latest driver.
+	Pre-requisites:
 
-Get the contents of the bin folder and execute:
-
-	rpcminer-mod-cuda.exe -url=http://<yourpool>:port -user=username -password=password -gpu -gputhreads=256 -aggression=11
+		NVIDIA GPU Computing Toolkit for CUDA (5.x)
+		build-essentials
+		libssl-dev
+		libboost-all-dev
+		libpcre3-dev
+		libcurl4-openssl-dev
+		cmake
+		gcc and g++ 4.6 (4.7+ is not compatible with CUDA 5 toolkit)
 	
-	(see https://bitcointalk.org/index.php?topic=163750 for optimised paramters)
+	Build
+	
+		cmake .
+		make
+		cmake-rpcminer/rpcminer -url=http://<yourpool>:port -user=username -password=password -gpu -gputhreads=256 -aggression=11
+
+Windows:
+
+	NVIDIA:
+
+	Download and install the latest NVIDIA GPU Computing Toolkit for CUDA (5.x) including latest driver.
+
+	Get the contents of the bin folder and execute:
+
+		rpcminer-mod-cuda.exe -url=http://<yourpool>:port -user=username -password=password -gpu -gputhreads=256 -aggression=11
+	
+		(see https://bitcointalk.org/index.php?topic=163750 for optimised paramters)
 
 	
-ATI/OpenCL:
+	ATI/OpenCL:
 
-Download and install the AMD APP for OpenCL.
+	Download and install the AMD APP for OpenCL.
 
-Get the contents of the bin folder and execute:
+	Get the contents of the bin folder and execute:
 
-	rpcminer-mod-opencl.exe -url=http://<yourpool>:port -user=username -password=password -gpu
+		rpcminer-mod-opencl.exe -url=http://<yourpool>:port -user=username -password=password -gpu
 	
-	(see notes below for optimised paramters)
+		(see notes below for optimised paramters)
 
 
-To build:
+	To build:
 
-Requires Visual Studio 2010 and appropriate SDK (NVIDIA GPU Computing Toolkit for CUDA or AMD APP for OpenCL).
+	Requires Visual Studio 2010 and appropriate SDK (NVIDIA GPU Computing Toolkit for CUDA or AMD APP for OpenCL).
 
-Expand all the 7z files in the "external" directory.
+	Expand all the 7z files in the "external" directory.
 
-Open solution and make sure CUDA or OpenCL includes and library paths for each project are correct.
+	Open solution and make sure CUDA or OpenCL includes and library paths for each project are correct.
 
-Build.	
+	Build.	
 
 *********************
  
