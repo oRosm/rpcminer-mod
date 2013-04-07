@@ -33,15 +33,16 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin\</OutDir>
-    <IntDir>$(SolutionDir)\obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\</IntDir>
     <CustomBuildAfterTargets>Build</CustomBuildAfterTargets>
     <CustomBuildBeforeTargets>BuildCompile</CustomBuildBeforeTargets>
+    <TargetName>$(ProjectName)-debug</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin\</OutDir>
-    <IntDir>$(SolutionDir)\obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\</IntDir>
     <CustomBuildAfterTargets>
     </CustomBuildAfterTargets>
     <CustomBuildBeforeTargets>BuildCompile</CustomBuildBeforeTargets>
@@ -52,18 +53,18 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(MSBuildProjectDirectory)\external\boost_1_53_0;$(MSBuildProjectDirectory)\external\libcurl-7.18.0-win32-msvc\include;$(MSBuildProjectDirectory)\external\openssl-1.0.1e-win32\include;C:\Program Files %28x86%29\NVIDIA GPU Computing Toolkit\CUDA\v5.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\boost_1_53_0;$(ProjectDir)external\libcurl-7.18.0-win32-msvc\include;$(ProjectDir)external\openssl-1.0.1e-win32\include;$(CUDA_PATH)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CONSOLE;_WIN32;_BITCOIN_MINER_CUDA_;_DEBUG</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>C:\Program Files %28x86%29\NVIDIA GPU Computing Toolkit\CUDA\v5.0\lib\Win32;$(MSBuildProjectDirectory)\external\libcurl-7.18.0-win32-msvc;$(MSBuildProjectDirectory)\external\boost_1_53_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)external\boost_1_53_0\lib;$(ProjectDir)external\libcurl-7.18.0-win32-msvc;$(CUDA_PATH)lib\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libcurl.lib;cuda.lib;cudart.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
-      <Command>"$(ProjectDir)buildcuda.bat"</Command>
+      <Command>"$(ProjectDir)buildcuda_debug.bat"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Message>Compile bitcoinminercuda.cu</Message>
@@ -77,7 +78,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(MSBuildProjectDirectory)\external\boost_1_53_0;$(MSBuildProjectDirectory)\external\libcurl-7.18.0-win32-msvc\include;$(MSBuildProjectDirectory)\external\openssl-1.0.1e-win32\include;C:\Program Files %28x86%29\NVIDIA GPU Computing Toolkit\CUDA\v5.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\boost_1_53_0;$(ProjectDir)external\libcurl-7.18.0-win32-msvc\include;$(ProjectDir)external\openssl-1.0.1e-win32\include;$(CUDA_PATH)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
@@ -85,7 +86,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(CUDA_PATH)\lib\Win32;$(MSBuildProjectDirectory)\external\libcurl-7.18.0-win32-msvc;$(MSBuildProjectDirectory)\external\boost_1_53_0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)external\boost_1_53_0\lib;$(ProjectDir)external\libcurl-7.18.0-win32-msvc;$(CUDA_PATH)lib\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libcurl.lib;cuda.lib;cudart.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
