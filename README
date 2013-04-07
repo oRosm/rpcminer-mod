@@ -1,3 +1,40 @@
+This is the Windows build of psychocoder's version of rpcminer-mod (https://github.com/psychocoder-germany/rpcminer-mod) - separate until it gets merged. It should still be compatible with unix, just has added Windows compatability.
+
+
+NVIDIA:
+
+Download and install the latest NVIDIA GPU Computing Toolkit for CUDA (5.x) including latest driver.
+
+Get the contents of the bin folder and execute:
+
+	rpcminer-mod-cuda.exe -url=http://<yourpool>:port -user=username -password=password -gpu -gputhreads=256 -aggression=11
+	
+	(see https://bitcointalk.org/index.php?topic=163750 for optimised paramters)
+
+	
+ATI/OpenCL:
+
+Download and install the AMD APP for OpenCL.
+
+Get the contents of the bin folder and execute:
+
+	rpcminer-mod-opencl.exe -url=http://<yourpool>:port -user=username -password=password -gpu
+	
+	(see notes below for optimised paramters)
+
+
+To build:
+
+Requires Visual Studio 2010 and appropriate SDK (NVIDIA GPU Computing Toolkit for CUDA or AMD APP for OpenCL).
+
+Expand all the 7z files in the "external" directory.
+
+Open solution and make sure CUDA or OpenCL includes and library paths for each project are correct.
+
+Build.	
+
+*********************
+ 
 This is a modification of puddinpop's miner.
 This modification will allow users to compile this miner with CUDA or Opencl support and install it in easly manner.
 
