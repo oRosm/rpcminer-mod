@@ -45,6 +45,10 @@ m_outD(NULL)
 
     std::cout << num_gpus << " GPU GUDA device(s) found" << std::endl;
 
+		if (m_deviceindex < 0)
+		{
+			m_deviceindex=0;
+		}
     if (num_gpus < m_deviceindex) //check if i can select device with diviceNumber
     {
         std::cerr << "no CUDA device " << m_deviceindex << ", only " << num_gpus << " devices found" << std::endl;
